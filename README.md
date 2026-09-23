@@ -34,9 +34,11 @@ que aparece duas vezes (seção "Como contratar" e rodapé).
 
 ## Publicar no GitHub Pages
 
-Mesmo procedimento usado no `syntenia-site`: **um repositório público próprio,
-só com esta pasta**. O repositório precisa ser público porque o GitHub Pages em
-conta gratuita só serve sites de repositórios públicos.
+**Já publicado em 23/09/2026:** repositório [lcerdeira/gesus-site](https://github.com/lcerdeira/gesus-site)
+(público, como o Pages em conta gratuita exige), Pages ligado na `main` / raiz,
+domínio `gesus.com.br` reconhecido pelo arquivo `CNAME`. Falta só o DNS (abaixo).
+
+Os comandos que criaram o repositório, para referência:
 
 ```bash
 # 1. criar o repositório público (a partir do conteúdo desta pasta)
@@ -45,13 +47,13 @@ git init -b main
 git add .
 git commit -m "Site institucional do GeSUS"
 
-gh repo create <org-ou-usuario>/gesus-site --public --source=. --remote=origin --push
+gh repo create lcerdeira/gesus-site --public --source=. --remote=origin --push
 # (ou crie o repositório pela interface do GitHub e use git remote add origin ... && git push -u origin main)
 ```
 
 ```bash
 # 2. ligar o Pages na branch main, pasta raiz
-gh api -X POST repos/<org-ou-usuario>/gesus-site/pages \
+gh api -X POST repos/lcerdeira/gesus-site/pages \
   -f 'source[branch]=main' -f 'source[path]=/'
 ```
 
@@ -86,7 +88,7 @@ AWS, deixando **`app.gesus.com.br` intacto** apontando para a mesma máquina.
 | A | `@` | `185.199.109.153` | 600 |
 | A | `@` | `185.199.110.153` | 600 |
 | A | `@` | `185.199.111.153` | 600 |
-| CNAME | `www` | `<org-ou-usuario>.github.io` | 600 |
+| CNAME | `www` | `lcerdeira.github.io` | 600 |
 
 Opcionalmente, para IPv6, quatro registros `AAAA` em `@`:
 `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`,
@@ -103,7 +105,7 @@ Se `app` ainda não existir como registro próprio, crie-o **antes** de remover 
 
 ```bash
 dig +short gesus.com.br        # deve responder os quatro IPs 185.199.x.153
-dig +short www.gesus.com.br    # deve responder <org-ou-usuario>.github.io
+dig +short www.gesus.com.br    # deve responder lcerdeira.github.io
 dig +short app.gesus.com.br    # deve continuar respondendo 18.228.83.236
 ```
 
